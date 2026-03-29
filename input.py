@@ -54,5 +54,5 @@ def Speech_to_text_py():
         print_loop.join()
 
 
-def main():
+def input_voice():
     Speech_to_text_py()

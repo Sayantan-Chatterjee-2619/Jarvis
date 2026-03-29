@@ -1,4 +1,4 @@
-from main import main
+from input import input_voice
 
 print("Calling Jarvis...")
-main()
+input_voice()
