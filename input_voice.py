@@ -3,6 +3,7 @@ import os
 import threading
 from mtranslate import translate
 from colorama import Fore,Style,init
+from output_voice import translate_en_to_hi
 
 init(autoreset=True)
 
@@ -36,8 +37,9 @@ def Speech_to_text_py():
                 recognized_text=recognizer.recognize_google(audio).lower()
                 if recognized_text:
                     text_output= translate_hi_to_en(str(recognized_text))
+                    translate_en_to_hi(text_output)
                     print("\r" + Fore.LIGHTBLUE_EX + text_output)
-                    return recognized_text
+                    return text_output
                 else:
                     return ""
             except sr.UnknownValueError:
@@ -52,7 +54,8 @@ def Speech_to_text_py():
         stt_thread.start()
         stt_thread.join()
         print_loop.join()
-
+        
+    
 
 def input_voice():
     Speech_to_text_py()
