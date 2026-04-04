@@ -3,7 +3,6 @@ import os
 import threading
 import asyncio
 from mtranslate import translate
-from input_voice import Speech_to_text_py
 
 import edge_tts
 
@@ -63,7 +62,5 @@ def speak(text, output_file=None):
     # Play audio in a separate thread
     thread = threading.Thread(target=play_audio, args=(output_file,))
     thread.start()
-    thread.join()
-
-    Speech_to_text_py()
+    thread.join()    
 
