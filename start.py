@@ -1,4 +1,4 @@
-from input_voice import input_voice
+from input_voice import Speech_to_text_py
 
 print("Calling Jarvis...")
-input_voice()
+Speech_to_text_py()

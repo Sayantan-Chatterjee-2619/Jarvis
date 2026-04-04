@@ -47,15 +47,15 @@ def Speech_to_text_py():
             finally:
                 print("\r", end="", flush=True)
             
-            os.system("cls" if os.name == "jv" else "clear")
+            os.system("cls" if os.name == "jv" else "cls")
         
-        stt_thread=threading.Thread(target=Speech_to_text_py)
-        print_thread=threading.Thread(target=print_loop)
-        stt_thread.start()
-        stt_thread.join()
-        print_loop.join()
+            stt_thread=threading.Thread(target=Speech_to_text_py)
+            print_thread=threading.Thread(target=print_loop)
+            print(print_thread)
+            stt_thread.start()
+            stt_thread.join()
+            print_loop.join()
         
     
 
-def input_voice():
-    Speech_to_text_py()
+
