@@ -95,6 +95,8 @@ class AppController:
             cmd = self._get_app_command(app_name)
         
         if cmd:
+            if isinstance(cmd, str):
+                cmd = [cmd]
             if args:
                 cmd.extend(args)
             proc = subprocess.Popen(cmd, shell=(self.platform == "Windows"),
@@ -258,7 +260,7 @@ def main():
     running = app_controller.list_running_processes()
     print(f"Running tracked processes: {running if running else 'None'}")
     
-    running = controller.list_running_processes()
+    running = app_controller.list_running_processes()
     print(f"Running tracked browsers: {running if running else 'None'}")
     
     print("\n" + "="*50)
