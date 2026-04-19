@@ -190,7 +190,7 @@ def main():
     
     # Open browsers
     if current_platform == "Windows":
-        pid = controller.open_browser("chrome", "https://www.google.com")
+        pid = controller.open_browser("chrome", "https://www.youtube.com")
         print(f"Opened Chrome (PID: {pid})")
         pid = controller.open_browser("firefox")
         print(f"Opened Firefox (PID: {pid})")
@@ -243,30 +243,103 @@ def main():
     time.sleep(2)
     
     # Close specific app
-    if platform == "Windows":
+    if current_platform == "Windows":
         app_controller.close_app("Notepad")
         print("Closed Notepad")
-    elif platform == "Darwin":
+    elif current_platform == "Darwin":
         app_controller.close_app("TextEdit")
         print("Closed TextEdit")
-    
+     
     time.sleep(2)
-    
-    # Close all apps
+     
+     # Close all apps
     app_controller.close_app()
     print("Closed all apps")
-    
+     
     print("\n--- System Process Check ---")
     running = app_controller.list_running_processes()
     print(f"Running tracked processes: {running if running else 'None'}")
-    
+     
+    print("\n--- System Process Check ---")
     running = app_controller.list_running_processes()
     print(f"Running tracked browsers: {running if running else 'None'}")
-    
+     
     print("\n" + "="*50)
     print("Automation complete!")
     print("="*50)
 
+def user_interactive_mode():
+    """Interactive mode for user to open/close apps and browsers"""
+    print("\n" + "="*50)
+    print("INTERACTIVE MODE")
+    print("="*50)
+    
+    bc = BrowserController()
+    ac = AppController()
+    
+    while True:
+        print("\nOptions:")
+        print("1. Open browser")
+        print("2. Open app")
+        print("3. Close browser")
+        print("4. Close app")
+        print("5. Close all")
+        print("6. List running")
+        print("7. Exit")
+        
+        choice = input("\nEnter choice (1-7): ").strip()
+        
+        if choice == "1":
+            name = input("Enter browser name (chrome/firefox/edge/safari): ").strip()
+            url = input("Enter URL (optional, press Enter to skip): ").strip()
+            if url:
+                bc.open_browser(name, url)
+                print(f"Opened {name} with URL {url}")
+            else:
+                bc.open_browser(name)
+                print(f"Opened {name}")
+                
+        elif choice == "2":
+            name = input("Enter app name: ").strip()
+            bc_processes = ['Calculator', 'Notepad', 'Paint', 'WordPad']
+            ac_processes = ['Calculator', 'Notepad', 'Paint', 'WordPad', 'File Explorer', 'Calculator']
+            if name in bc_processes:
+                pid = bc.open_browser(name)
+                print(f"Opened {name} browser (PID: {pid})")
+            elif name in ac_processes:
+                pid = ac.open_app(name)
+                print(f"Opened {name} app (PID: {pid})")
+            else:
+                print(f"Unknown app/browser: {name}")
+                
+        elif choice == "3":
+            name = input("Enter browser name to close: ").strip()
+            bc.close_browser(name)
+            print(f"Closed {name}")
+            
+        elif choice == "4":
+            name = input("Enter app name to close: ").strip()
+            ac.close_app(name)
+            print(f"Closed {name}")
+            
+        elif choice == "5":
+            bc.close_browser()
+            ac.close_app()
+            print("Closed all")
+            
+        elif choice == "6":
+            running_browsers = bc.list_running_processes()
+            running_apps = ac.list_running_processes()
+            print(f"Running browsers: {running_browsers}")
+            print(f"Running apps: {running_apps}")
+            
+        elif choice == "7":
+            print("Exiting...")
+            break
+            
+        else:
+            print("Invalid choice")
 
 if __name__ == "__main__":
-    main()
+    #main()
+    user_interactive_mode()
